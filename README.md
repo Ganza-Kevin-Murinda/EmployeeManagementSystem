@@ -46,5 +46,5 @@ The system offers a JavaFX-based user interface to manage employee data.
 1. **Clone the Repository**
 
 ```bash
-git clone https://github.com/Ganza-Kevin-Murinda/Employee-Management-System.git
+git clone https://github.com/Ganza-Kevin-Murinda/EmployeeManagementSystem.git
 
