@@ -31,7 +31,7 @@ public class EmployeeDatabase<T> {
     }
 
     //Retrieve All
-    public List<Employee<T>> getEmployees(){
+    public List<Employee<T>> getAllEmployees(){
         return new ArrayList<>(employees.values());
     }
 
@@ -149,11 +149,11 @@ public class EmployeeDatabase<T> {
     }
 
     //Gives a salary raise to employees with high performance
-    public int giveSalaryRaiseToHighPerformers(double minRating, double raisePercentage) {
+    public int giveSalaryRaiseToHighPerformers() {
         int count = 0;
         for (Employee<T> employee : employees.values()) {
-            if (employee.getPerformanceRating() >= minRating) {
-                double newSalary = employee.getEmployeeSalary() * (1 + raisePercentage / 100);
+            if (employee.getPerformanceRating() >= 3.5) {
+                double newSalary = employee.getEmployeeSalary() * (1 + 2.0 / 100);
                 employee.setEmployeeSalary(newSalary);
                 count++;
             }
