@@ -7,7 +7,7 @@ A Java-based **Employee Management System** that enables organizations to effici
 ## 💼 Project Overview
 
 This project simulates the core features of a real-world employee database, designed to strengthen your skills with Java's object-oriented principles and collection handling.  
-The system offers a JavaFX-based user interface to manage employee data.
+The system offers a console and JavaFX-based user interface to manage employee data.
 
 ---
 
@@ -27,7 +27,7 @@ The system offers a JavaFX-based user interface to manage employee data.
   - Grant raises to high-performing employees.
   - List the top 5 highest-paid employees.
   - Calculate the average salary per department.
-- 💻 JavaFX GUI for a friendly display.
+- 💻 Console and JavaFX GUI for a friendly display.
 
 ---
 
@@ -38,6 +38,15 @@ The system offers a JavaFX-based user interface to manage employee data.
 - Java Generics  
 - Java Stream API & Iterators  
 - JavaFX (for GUI)  
+
+---
+
+## 📹 Video
+
+```bash
+https://screenrec.com/share/eYz8UdtMEK
+
+```
 
 ---
 
