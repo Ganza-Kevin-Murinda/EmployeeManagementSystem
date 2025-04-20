@@ -183,13 +183,115 @@ public class EmployeeDatabase<T> {
                 .orElse(0);
     }
 
-    //Gets the number of employees in the database
-    public int getEmployeeCount() {
+    //Gets the total number of employees in the database
+    public int getTotalEmployeeCount() {
         return employees.size();
+    }
+
+    //Gets the number of active employees in the database
+    public int getActiveEmployeeCount() {
+        return (int) employees.values().stream()
+                .filter(Employee::isActive)
+                .count();
     }
     //Traverse all employees
     public Iterator<Employee<T>> getEmployeeIterator() {
         return employees.values().iterator();
     }
 
+    // Console Display
+
+    // Displays all employees using a for-each loop
+    public void displayEmployeesWithForEach() {
+        // Print header
+        String headerFormat = "%-10s %-20s %-15s %-12s %-12s %-10s %-10s%n";
+        System.out.println("\n=== Employee ===");
+        System.out.printf(headerFormat, "ID", "Name", "Department", "Salary ($)", "Rating", "Experience", "Status");
+        System.out.println("----------------------------------------------------------------------------------------------------");
+
+        // Format and print each employee
+        String rowFormat = "%-10s %-20s %-15s %-12.2f %-12.2f %-10d %-10s%n";
+        for (Employee<T> employee : employees.values()) {
+            System.out.printf(rowFormat,
+                    employee.getEmployeeId().toString(),
+                    truncateText(employee.getEmployeeName(), 20),
+                    employee.getEmployeeDepartment().name(),
+                    employee.getEmployeeSalary(),
+                    employee.getPerformanceRating(),
+                    employee.getYearsOfExperience(),
+                    employee.isActive() ? "Active" : "Inactive"
+            );
+        }
+        System.out.println("----------------------------------------------------------------------------------------------------");
+        System.out.println("Total Employees: " + getTotalEmployeeCount());
+        System.out.println("Total Active Employees: " + getActiveEmployeeCount());
+    }
+
+    // Generates and displays formatted employee reports using Stream API
+    public void displayEmployeesWithStreams() {
+        System.out.println("\n=== Employee Report ===");
+
+        // Print header
+        String headerFormat = "%-10s %-20s %-15s %-12s %-12s %-10s %-10s%n";
+        System.out.printf(headerFormat, "ID", "Name", "Department", "Salary ($)", "Rating", "Experience", "Status");
+        System.out.println("----------------------------------------------------------------------------------------------------");
+
+        // Use Stream API to format and print each employee
+        String rowFormat = "%-10s %-20s %-15s %-12.2f %-12.2f %-10d %-10s%n";
+        employees.values().stream()
+                .forEach(employee ->
+                        System.out.printf(rowFormat,
+                                employee.getEmployeeId().toString(),
+                                truncateText(employee.getEmployeeName(), 20),
+                                employee.getEmployeeDepartment().name(),
+                                employee.getEmployeeSalary(),
+                                employee.getPerformanceRating(),
+                                employee.getYearsOfExperience(),
+                                employee.isActive() ? "Active" : "Inactive")
+                );
+
+        System.out.println("----------------------------------------------------------------------------------------------------");
+
+        // Additional report information using Stream API operations
+        System.out.println("Total Active Employees: " + getActiveEmployeeCount());
+
+        // Calculate and display average salary
+        double avgSalary = employees.values().stream()
+                .mapToDouble(Employee::getEmployeeSalary)
+                .average()
+                .orElse(0);
+        System.out.printf("Average Salary: $%.2f%n", avgSalary);
+
+        // Calculate and display average performance rating
+        double avgRating = employees.values().stream()
+                .mapToDouble(Employee::getPerformanceRating)
+                .average()
+                .orElse(0);
+        System.out.printf("Average Performance Rating: %.2f%n", avgRating);
+
+        // Count active employees
+        long activeCount = employees.values().stream()
+                .filter(Employee::isActive)
+                .count();
+        System.out.printf("Active Employees: %d (%.1f%%)%n",
+                activeCount,
+                employees.isEmpty() ? 0 : (activeCount * 100.0 / getActiveEmployeeCount()));
+
+        // Department distribution
+        System.out.println("\nDepartment Distribution:");
+        employees.values().stream()
+                .collect(java.util.stream.Collectors.groupingBy(
+                        Employee::getEmployeeDepartment,
+                        java.util.stream.Collectors.counting()
+                ))
+                .forEach((dept, count) -> System.out.printf("  %s: %d employees%n", dept, count));
+    }
+
+    // Helper method to truncate text to a specified length
+    private String truncateText(String text, int maxLength) {
+        if (text == null || text.length() <= maxLength) {
+            return text;
+        }
+        return text.substring(0, maxLength - 3) + "...";
+    }
 }
