@@ -26,7 +26,7 @@ public class EmployeeManagementApp extends Application {
         EmployeeController controller = new EmployeeController(employeeDatabase, mainView);
 
         // Create scene and set stage
-        Scene scene = new Scene(mainView, 1000, 600);
+        Scene scene = new Scene(mainView, 1366, 660);
         primaryStage.setTitle("Employee Management System");
         primaryStage.setScene(scene);
         primaryStage.show();
