@@ -74,6 +74,9 @@ public class EmployeeController {
 
         // Initialize department dropdown in salary management view
         mainView.getSalaryManagementView().populateDepartments(getDepartmentNames());
+
+        // Console report button handler
+        mainView.getTableView().getConsoleReportButton().setOnAction(e -> printEmployeeReportsToConsole());
     }
 
     //Refreshes the employee table with all employees
@@ -372,6 +375,27 @@ public class EmployeeController {
         } else {
             showAlert("Average Salary", "No employees found in the " + department + " department.");
         }
+    }
+
+    // Prints employee reports to the console
+    private void printEmployeeReportsToConsole() {
+        // Check if there are employees to display
+        if (employeeDB.getTotalEmployeeCount() == 0) {
+            showAlert("No Employees", "There are no employees to display in the console.");
+            return;
+        }
+
+        // Print reports to console
+        System.out.println("\n========== EMPLOYEE MANAGEMENT SYSTEM REPORTS ==========");
+        System.out.println("Report generated at: " + java.time.LocalDateTime.now());
+        System.out.println("\n--- Report using For-Each Loop ---");
+        employeeDB.displayEmployeesWithForEach();
+
+        System.out.println("\n--- Report using Stream API ---");
+        employeeDB.displayEmployeesWithStreams();
+
+        // Show confirmation dialog
+        showAlert("Console Report", "Employee reports have been printed to the console.");
     }
 
 }
